@@ -1,0 +1,16 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+	<meta charset="utf-8" /> 
+	<title>jGyro - easy access to built in accelerometer's and gyroscope's</title>
+</head>
+<body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script src="../js/jGyro2.js"></script>
+<script>
+	$.jGyro({frequency: 500, callback: function(x, y, z, alpha, beta, gamma) {
+		//do jazz.
+	}});
+</script>
+</body>
+</html>
