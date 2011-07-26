@@ -6,11 +6,13 @@
 </head>
 <body>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-<script src="../js/jGyro2.js"></script>
+<script src="../js/jGyro.js"></script>
 <script>
+(function($){
 	$.jGyro({frequency: 500, callback: function(x, y, z, alpha, beta, gamma) {
 		//do jazz.
 	}});
+});
 </script>
 </body>
 </html>
