@@ -10,6 +10,7 @@ device supports it.
 
 ## Installation
 Copy the file js/jGyro.js to your web server and also include the latest version of jquery.
+
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 	<script src="js/jGyro.js"></script>
 
