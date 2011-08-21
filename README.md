@@ -1,7 +1,6 @@
-# jGyro
+#gyro.js
 
-jGyro is a Jquery Plugin which combines all the current interfaces on reading Gyro and Accelerometer information if your
-device supports it.
+gyro.js is an adaptor which combines all the current interfaces and standards on reading Gyro and Accelerometer information and combines them into one simple object.
 
 ## Tested Compatability
 	iPhone >= iOS 4.x
@@ -9,33 +8,33 @@ device supports it.
 	Firefox >= 4.x
 
 ## Installation
-Copy the file js/jGyro.js to your web server and also include the latest version of jquery.
+Copy the file js/gyro.js to your web server or download from <http://www.tomg.co/gyrojs>.
 
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-	<script src="js/jGyro.js"></script>
+	<script src="js/gyro.js"></script>
 
 ## Usage
 
-At the bottom of your document after the including of jQuery and jGyro add the following.
+At the bottom of your document after the including of gyro.js add the following.
 	
 	<script>
-		(function($){
-			$.jGyro({
-				frequency: 500,
-				callback: function(x, y, z, alpha, beta, gamma) {
-					//do jazz.
-				}	
-			});
+		gyro.startTracking(function(o) {
+			// o.x, o.y, o.z for accelerometer
+			// o.alpha, o.beta, o.gamma for gyro
 		});
 	</script>
 
-Options:
+## API
 
-- `frequency` - How often to poll for changes.
-- `callback` - The function which gets called at each update.
-
+- `gyro.frequency = 500` - How often to poll for changes.
+- `gyro.getOrientation()` - Get the current accelerometer and gyro information.
+- `gyro.startTracking(function(o){...})` - Return the gyro data at the specified frequency defined in `gyro.frequency`
+- `gyro.stopTracking()` - Clear the interval set in `gyro.startTracking`.
+- `gyro.hasFeature('devicemotion')` - Check if the web browser supports either MozOrientation, devicemotion or deviceorientation
+- `gyro.getFeatures()` - Gets all accelerometer and gyro features supported.
 
 ## License
+
+Available in other licenses by contacting me.
 
 (The MIT License)
 
