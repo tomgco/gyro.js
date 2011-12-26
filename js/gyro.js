@@ -38,7 +38,6 @@
 		for (var i in measurements) {
 			calibration[i] = (typeof measurements[i] === 'number') ? measurements[i] : 0;
 		}
-		console.log(calibration.x + ' ' + calibration.y);
 	};
 
 	gyro.getOrientation = function() {
@@ -81,22 +80,21 @@
 
 	function setupListeners() {
 		window.addEventListener('MozOrientation', function(e) {
-			//features.push('MozOrientation');
+			features.push('MozOrientation');
 			measurements.x = e.x - calibration.x;
 			measurements.y = e.y - calibration.y;
 			measurements.z = e.z - calibration.z;
 		}, true);
 
 		window.addEventListener('devicemotion', function(e) {
-			//features.push('devicemotion');
-			//console.log(calibration.x)
+			features.push('devicemotion');
 			measurements.x = e.accelerationIncludingGravity.x - calibration.x;
 			measurements.y = e.accelerationIncludingGravity.y - calibration.y;
 			measurements.z = e.accelerationIncludingGravity.z - calibration.z;
 		}, true);
 
 		window.addEventListener('deviceorientation', function(e) {
-			//features.push('deviceorientation');
+			features.push('deviceorientation');
 			measurements.alpha = e.alpha - calibration.alpha;
 			measurements.beta = e.beta - calibration.beta;
 			measurements.gamma = e.gamma - calibration.gamma;
