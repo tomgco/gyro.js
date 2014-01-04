@@ -7,7 +7,20 @@
  * @license MIT License
  * @options frequency, callback
  */
-(function() {
+(function (root, factory) {
+		if (typeof define === 'function' && define.amd) {
+				// AMD. Register as an anonymous module.
+				define(factory);
+		} else if (typeof exports === 'object') {
+				// Node. Does not work with strict CommonJS, but
+				// only CommonJS-like enviroments that support module.exports,
+				// like Node.
+				module.exports = factory();
+		} else {
+				// Browser globals (root is window)
+				root.returnExports = factory();
+	}
+}(this, function () {
 	var measurements = {
 				x: null,
 				y: null,
@@ -27,7 +40,7 @@
 			interval = null,
 			features = [];
 
-	window.gyro = {};
+	var gyro = {};
 
 	/**
 	 * @public
@@ -77,30 +90,34 @@
 	/**
 	 * @private
 	 */
+	// it doesn't make sense to depend on a "window" module
+	// since deviceorientation & devicemotion make just sense in the browser
+	// so old school test used.
+	if (window && window.addEventListener) {
+		function setupListeners() {
+			window.addEventListener('MozOrientation', function(e) {
+				features.push('MozOrientation');
+				measurements.x = e.x - calibration.x;
+				measurements.y = e.y - calibration.y;
+				measurements.z = e.z - calibration.z;
+			}, true);
 
-	function setupListeners() {
-		window.addEventListener('MozOrientation', function(e) {
-			features.push('MozOrientation');
-			measurements.x = e.x - calibration.x;
-			measurements.y = e.y - calibration.y;
-			measurements.z = e.z - calibration.z;
-		}, true);
+			window.addEventListener('devicemotion', function(e) {
+				features.push('devicemotion');
+				measurements.x = e.accelerationIncludingGravity.x - calibration.x;
+				measurements.y = e.accelerationIncludingGravity.y - calibration.y;
+				measurements.z = e.accelerationIncludingGravity.z - calibration.z;
+			}, true);
 
-		window.addEventListener('devicemotion', function(e) {
-			features.push('devicemotion');
-			measurements.x = e.accelerationIncludingGravity.x - calibration.x;
-			measurements.y = e.accelerationIncludingGravity.y - calibration.y;
-			measurements.z = e.accelerationIncludingGravity.z - calibration.z;
-		}, true);
-
-		window.addEventListener('deviceorientation', function(e) {
-			features.push('deviceorientation');
-			measurements.alpha = e.alpha - calibration.alpha;
-			measurements.beta = e.beta - calibration.beta;
-			measurements.gamma = e.gamma - calibration.gamma;
-		}, true);
+			window.addEventListener('deviceorientation', function(e) {
+				features.push('deviceorientation');
+				measurements.alpha = e.alpha - calibration.alpha;
+				measurements.beta = e.beta - calibration.beta;
+				measurements.gamma = e.gamma - calibration.gamma;
+			}, true);
+		}
+		setupListeners();
 	}
 
-	setupListeners();
-
-})(window);
+	return gyro;
+}));
