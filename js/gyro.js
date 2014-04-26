@@ -18,7 +18,7 @@
 				module.exports = factory();
 		} else {
 				// Browser globals (root is window)
-				root.returnExports = factory();
+				root.gyro = factory();
 	}
 }(this, function () {
 	var measurements = {
@@ -95,26 +95,40 @@
 	// so old school test used.
 	if (window && window.addEventListener) {
 		function setupListeners() {
-			window.addEventListener('MozOrientation', function(e) {
+			function MozOrientationInitListener (e) {
 				features.push('MozOrientation');
-				measurements.x = e.x - calibration.x;
-				measurements.y = e.y - calibration.y;
-				measurements.z = e.z - calibration.z;
-			}, true);
+				e.target.removeEventListener('MozOrientation', MozOrientationInitListener, true);
 
-			window.addEventListener('devicemotion', function(e) {
+				e.target.addEventListener('MozOrientation', function(e) {
+					measurements.x = e.x - calibration.x;
+					measurements.y = e.y - calibration.y;
+					measurements.z = e.z - calibration.z;
+				}, true);
+			}
+			function deviceMotionListener (e) {
 				features.push('devicemotion');
-				measurements.x = e.accelerationIncludingGravity.x - calibration.x;
-				measurements.y = e.accelerationIncludingGravity.y - calibration.y;
-				measurements.z = e.accelerationIncludingGravity.z - calibration.z;
-			}, true);
-
-			window.addEventListener('deviceorientation', function(e) {
+				e.target.removeEventListener('devicemotion', deviceMotionListener, true);
+				
+				e.target.addEventListener('devicemotion', function(e) {
+					measurements.x = e.accelerationIncludingGravity.x - calibration.x;
+					measurements.y = e.accelerationIncludingGravity.y - calibration.y;
+					measurements.z = e.accelerationIncludingGravity.z - calibration.z;
+				}, true);
+			}
+			function deviceOrientationListener (e) {
 				features.push('deviceorientation');
-				measurements.alpha = e.alpha - calibration.alpha;
-				measurements.beta = e.beta - calibration.beta;
-				measurements.gamma = e.gamma - calibration.gamma;
-			}, true);
+				e.target.removeEventListener('deviceorientation', deviceOrientationListener, true);
+				
+				e.target.addEventListener('deviceorientation', function(e) {
+					measurements.alpha = e.alpha - calibration.alpha;
+					measurements.beta = e.beta - calibration.beta;
+					measurements.gamma = e.gamma - calibration.gamma;
+				}, true);
+			}
+
+			window.addEventListener('MozOrientation', MozOrientationInitListener, true);
+			window.addEventListener('devicemotion', deviceMotionListener, true);
+			window.addEventListener('deviceorientation', deviceOrientationListener, true);
 		}
 		setupListeners();
 	}
