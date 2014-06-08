@@ -95,12 +95,12 @@
 	function eulerToQuaternion(e) {
 		var s = Math.PI / 180;
 		var x = e.beta * s, y = e.gamma * s; z = e.alpha * s;
-		cX = Math.cos(x / 2);
-		cY = Math.cos(y / 2);
-		cZ = Math.cos(z / 2);
-		sX = Math.sin(x / 2);
-		sY = Math.sin(y / 2);
-		sZ = Math.sin(z / 2);
+		var cX = Math.cos(x / 2);
+		var cY = Math.cos(y / 2);
+		var cZ = Math.cos(z / 2);
+		var sX = Math.sin(x / 2);
+		var sY = Math.sin(y / 2);
+		var sZ = Math.sin(z / 2);
 		var w = cX * cY * cZ - sX * sY * sZ;
 		x = sX * cY * cZ - cX * sY * sZ;
 		y = cX * sY * cZ + sX * cY * sZ;
