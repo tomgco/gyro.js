@@ -123,7 +123,7 @@
 
 	/**
 	 * @private
-	 */	
+	 */
 	function quaternionApply(v, a) {
 		v = quaternionMultiply(a, {x:v.x,y:v.y,z:v.z,w:0});
 		v = quaternionMultiply(v, {w:a.w, x:-a.x, y:-a.y, z:-a.z});
@@ -132,7 +132,7 @@
 
 	/**
 	 * @private
-	 */	
+	 */
 	function vectorDot(a, b) {
 		return a.x * b.x + a.y * b.y + a.z * b.z;
 	}
@@ -147,8 +147,8 @@
 			0 : -Math.atan2(front.x, front.y);
 		var beta = Math.atan2(front.z,Math.sqrt(front.x*front.x+front.y*front.y));
 		var zgSide = {
-			x: Math.cos(alpha), 
-			y: Math.sin(alpha), 
+			x: Math.cos(alpha),
+			y: Math.sin(alpha),
 			z: 0
 		};
 		var zgUp = {
@@ -196,7 +196,7 @@
 			function deviceMotionListener (e) {
 				features.push('devicemotion');
 				e.target.removeEventListener('devicemotion', deviceMotionListener, true);
-				
+
 				e.target.addEventListener('devicemotion', function(e) {
 					measurements.x = e.accelerationIncludingGravity.x - calibration.x;
 					measurements.y = e.accelerationIncludingGravity.y - calibration.y;
@@ -206,14 +206,14 @@
 			function deviceOrientationListener (e) {
 				features.push('deviceorientation');
 				e.target.removeEventListener('deviceorientation', deviceOrientationListener, true);
-				
+
 				e.target.addEventListener('deviceorientation', function(e) {
 					var calib = eulerToQuaternion({
-						alpha: calibration.rawAlpha, 
-						beta: calibration.rawBeta, 
+						alpha: calibration.rawAlpha,
+						beta: calibration.rawBeta,
 						gamma: calibration.rawGamma
 					});
-					calib.x *= -1; calib.y *= -1; calib.z *= -1; 
+					calib.x *= -1; calib.y *= -1; calib.z *= -1;
 
 					var raw = eulerToQuaternion({
 						alpha: e.alpha, beta: e.beta, gamma: e.gamma
