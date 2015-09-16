@@ -143,7 +143,6 @@
 	function quaternionToEuler(q) {
 		var s = 180 / Math.PI;
 		var front = quaternionApply({x:0,y:1,z:0}, q);
-		console.log(front);
 		var alpha = (front.x == 0 && front.y == 0) ?
 			0 : -Math.atan2(front.x, front.y);
 		var beta = Math.atan2(front.z,Math.sqrt(front.x*front.x+front.y*front.y));
