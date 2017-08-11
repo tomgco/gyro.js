@@ -1,4 +1,4 @@
-#gyro.js
+# gyro.js
 
 gyro.js is an adaptor which combines all the current interfaces and standards on reading Gyro and Accelerometer information and combines them into one simple object.
 
